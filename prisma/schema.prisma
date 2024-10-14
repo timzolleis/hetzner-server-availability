@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model AvailabilityLog {
+  id                 Int                  @id @default(autoincrement())
+  timestamp          DateTime             @default(now())
+  serverAvailability ServerAvailability[]
+  success            Boolean              @default(true)
+  error              String?
+}
+
+model ServerAvailability {
+  id           Int     @id @default(autoincrement())
+  datacenterId Int
+  serverId     Int
+  available    Boolean
+
+  availabilityLogId Int
+  availabilityLog   AvailabilityLog @relation(fields: [availabilityLogId], references: [id])
+
+  @@index([serverId], type: Hash)
+  @@index([datacenterId], type: Hash)
+}
