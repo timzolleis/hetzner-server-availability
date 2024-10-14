@@ -1,4 +1,4 @@
-import {json} from "@remix-run/react";
+import {json} from "@remix-run/node";
 import {getLastAvailabilityLog} from "~/models/availability-log.server";
 import {runAbilityCheck} from "~/lib/availability-check.server";
 import {env} from "~/lib/env.server";
